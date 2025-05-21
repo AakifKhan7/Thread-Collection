@@ -34,7 +34,7 @@ ArrayList. size(): Returns the number of elements in the ArrayList.
  */
 
 
-public class PBB233 {
+public class PB233 {
     public static void main(String[] args) {
         StudentManager manager = new StudentManager();
         Scanner sc = new Scanner(System.in);
