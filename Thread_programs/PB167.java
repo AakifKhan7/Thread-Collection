@@ -20,8 +20,8 @@ public class PB167 {
     public static void main(String[] args) {
         Buffer buffer = new Buffer();
 
-        ProducerConsumer t1 = new ProducerConsumer(buffer, "Thread-A", "Thread-B");
-        ProducerConsumer t2 = new ProducerConsumer(buffer, "Thread-B", "Thread-A");
+        ProducerConsumer t1 = new ProducerConsumer(buffer, 1, 1);
+        ProducerConsumer t2 = new ProducerConsumer(buffer, 2, 2);
 
         t1.start();
         t2.start();
@@ -30,34 +30,31 @@ public class PB167 {
 
 class Buffer{
     int data;
-    String source;
-    String destination;
     boolean isEmpty = true;
 
-    public synchronized void put(int data, String source,  String destination){
-        try{
-            while (!isEmpty) {
-                wait();
-            }
-            this.data = data;
-            this.source = source;
-            this.destination = destination;
-
-            isEmpty = false;
-            System.out.println("Produced: " + data + " from " + source + " to " + destination);
-            notifyAll();
-        }catch(InterruptedException e){
-            System.out.println(e);
-        }
+    Buffer(){
+        isEmpty = true;
     }
 
-    public synchronized int get(String consumerName){
+    public synchronized void put(int data){
+            while (!isEmpty) {
+                try{
+                    wait();
+                }catch(Exception e){}
+            }
+            this.data = data;
+            isEmpty = false;
+            System.out.println("Produced: " + data);
+            notifyAll();
+    }
+
+    public synchronized int get(){
         try{
-            while (isEmpty || !consumerName.equals(destination)) {
+            while (isEmpty) {
                 wait();
             }
 
-            System.out.println("Consumed: " + data + " by " + consumerName + " (from " + source + ")");
+            System.out.println("Consumed: " + data );
             isEmpty = true;
             notifyAll();
             return data;
@@ -70,25 +67,22 @@ class Buffer{
 
 class ProducerConsumer extends Thread{
     Buffer buffer;
-    String otherThreadName;
+    int producerId, consumerId;
 
-    public ProducerConsumer(Buffer buffer, String name, String otherThreadName){
-        super(name);
+    public ProducerConsumer(Buffer buffer, int producerId, int consumerId){
         this.buffer = buffer;
-        this.otherThreadName = otherThreadName;
-
+        this.producerId = producerId;
+        this.consumerId = consumerId;
     }
 
     public void run(){
         for (int i = 1; i <= 5; i++) {
-            String dest = (Math.random() < 0.5) ? getName(): otherThreadName;
-            buffer.put(i, getName(), dest);
-            buffer.get(getName());
-            try{
-                Thread.sleep(500);
-            }catch(InterruptedException e){
-                System.out.println(e);
-            }
+            buffer.put(i * 100 + producerId * 10 + consumerId);
+            System.out.println("Producer " + producerId + " produced: " + (i * 100 + producerId * 10 + consumerId));
+
+            int consumedData = buffer.get();
+            System.out.println("Consumer " + consumerId + " consumed: " + consumedData);
+
         }
     }
 }
