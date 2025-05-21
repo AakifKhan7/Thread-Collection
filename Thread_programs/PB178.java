@@ -33,66 +33,62 @@ public class PB178 {
 
 }
 
-class BankAccount
-{
-    int total_balance=100000;
-    synchronized void withdraw(int amount)
-    {
-        Thread t=Thread.currentThread();
-       if(total_balance>=amount)
-       {
+class BankAccount {
+    int total_balance = 100000;
+
+    synchronized void withdraw(int amount) {
+        Thread t = Thread.currentThread();
+        if (total_balance >= amount) {
             System.out.println();
-            System.out.println(t.getName()+":: your Transiction is successful");
-            total_balance=total_balance-amount;
-            System.out.println("Available Balance="+total_balance);
+            System.out.println(t.getName() + ":: your Transiction is successful");
+            total_balance = total_balance - amount;
+            System.out.println("Available Balance=" + total_balance);
             System.out.println();
-       }
-       else
-       {    
+        } else {
             System.out.println();
-            System.out.println("Sorrry "+t.getName()+":: your Transiction is Failed");
-            System.out.println("Available Balance="+total_balance);
+            System.out.println("Sorrry " + t.getName() + ":: your Transiction is Failed");
+            System.out.println("Available Balance=" + total_balance);
             System.out.println();
 
-       }
+        }
     }
-    synchronized void deposite(int amount)
-    {
+
+    synchronized void deposite(int amount) {
         System.out.println();
-        Thread t=Thread.currentThread();
-        System.out.println("Hey "+t.getName()+" total Amount of "+amount+" deposited in your Account" );
-        total_balance=total_balance+amount;
-        System.out.println("Available balance is="+total_balance);
+        Thread t = Thread.currentThread();
+        System.out.println("Hey " + t.getName() + " total Amount of " + amount + " deposited in your Account");
+        total_balance = total_balance + amount;
+        System.out.println("Available balance is=" + total_balance);
         System.out.println();
 
     }
 
 }
-class WithDraw extends Thread
-{
+
+class WithDraw extends Thread {
     BankAccount acc;
     int amount;
-    public WithDraw(BankAccount acc, int amount) 
-    {
+
+    public WithDraw(BankAccount acc, int amount) {
         this.acc = acc;
         this.amount = amount;
     }
-    public void run()
-    {
+
+    public void run() {
         acc.withdraw(amount);
     }
 }
-class Deposite extends Thread
-{
+
+class Deposite extends Thread {
     BankAccount acc;
     int amount;
-    public Deposite(BankAccount acc, int amount) 
-    {
+
+    public Deposite(BankAccount acc, int amount) {
         this.acc = acc;
         this.amount = amount;
     }
-    public void run()
-    {
+
+    public void run() {
         acc.deposite(amount);
     }
 }
