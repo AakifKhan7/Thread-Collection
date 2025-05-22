@@ -1,8 +1,5 @@
 package Thread_programs;
 
-import java.nio.channels.Pipe.SourceChannel;
-import java.util.Scanner;
-
 /*
  * Problem Statement: Implement a Bank Account
 Write a Java program to implement a bank account that allows multiple

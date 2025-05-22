@@ -21,7 +21,7 @@ public class PB169 {
 
         int start = 1;
         for (int i = 0; i < numThreads - 1; i++) {
-            int end = start + 99; // Each thread examines next 50 numbers
+            int end = start + 49; // Each thread examines next 50 numbers
             OddNumberPrinter thread = new OddNumberPrinter(start, end);
             thread.start();
             start = end + 1;

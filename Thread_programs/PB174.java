@@ -1,5 +1,15 @@
 package Thread_programs;
 
+/*
+ * Write a complete multi-threaded program to meet following
+requirements:
+- Read matrix [A] m x n
+- Create m number of threads
+- Each thread computes summation of elements of one row, i.e. ith row of
+the matrix is processed by ith thread. Where 0 <= i< m.
+- Print the results
+ */
+
 public class PB174 {
     public static void main(String[] args) {
         int m = 5;

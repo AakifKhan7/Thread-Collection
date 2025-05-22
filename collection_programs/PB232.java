@@ -84,7 +84,7 @@ class EMS {
 
         System.out.print("Enter employee salary: ");
         double salary = sc.nextDouble();
-        sc.nextLine(); // clear buffer
+        sc.nextLine();
 
         Employee e = new Employee(name, age, salary);
         ae.add(e);

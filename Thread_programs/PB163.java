@@ -1,6 +1,12 @@
 package Thread_programs;
 
 import java.util.Scanner;
+/*
+ * Write a program to create two threads, one thread will check whether
+given number is prime or not and second thread will print prime numbers
+between 0 to 100
+
+ */
 
 public class PB163 {
     public static void main(String[] args) {
